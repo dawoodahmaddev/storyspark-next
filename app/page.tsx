@@ -41,13 +41,16 @@ export default function Home() {
             className="w-full p-4 text-lg border border-gray-300 rounded-md"
             placeholder="Enter your prompt here..."
             required
+            disabled={isLoading}
           />
           <button
             type="submit"
-            className="w-full px-6 py-3 text-lg bg-blue-600 text-white rounded-md">
-            Generate Story
+            className="w-full px-6 py-3 text-lg bg-blue-600 text-white rounded-md"
+            disabled={isLoading}>
+            { isLoading ? "Generating..." : "Generate Story"}
           </button>
         </form>
+        <p> {response}</p>
         <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center pt-5">
           <a
             className="flex items-center gap-2 hover:underline hover:underline-offset-4"
