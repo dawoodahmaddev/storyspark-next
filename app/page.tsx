@@ -1,19 +1,23 @@
 "use client"
 
 import Image from "next/image";
-import React from "react";
+import { useState } from "react";
+import { generateStory } from "./services/prompt-service";
 
 export default function Home() {
 
+  const [prompt, setPrompt] = useState<string>("");
+  const [response, setResponse] = useState<string[]>([]);
 
-  const handleSubmit = async (e: React.FormEvent) =>{
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      
+      const data = await generateStory(prompt);
+      console.log(data);
     } catch (error) {
-      
-    } finally{
-      
+      setResponse(["Error generating response"]);
+    } finally {
+
     }
   }
 
@@ -26,8 +30,8 @@ export default function Home() {
         <h1 className="text-3xl font-semibold text-center text-gray-800 mb-6">Create Story</h1>
         <form onSubmit={handleSubmit} className="space-y-4">
           <textarea
-            name=""
-            id=""
+            value={prompt}
+            onChange={(e) => setPrompt(e.target.value)}
             rows={4}
             className="w-full p-4 text-lg border border-gray-300 rounded-md"
             placeholder="Enter your prompt here..."
@@ -36,28 +40,28 @@ export default function Home() {
           <button
             type="submit"
             className="w-full px-6 py-3 text-lg bg-blue-600 text-white rounded-md">
-              Generate Story
+            Generate Story
           </button>
         </form>
         <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center pt-5">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://storyspark.ai/"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to storyspar.ai →
-        </a>
-      </footer>
+          <a
+            className="flex items-center gap-2 hover:underline hover:underline-offset-4"
+            href="https://storyspark.ai/"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <Image
+              aria-hidden
+              src="/globe.svg"
+              alt="Globe icon"
+              width={16}
+              height={16}
+            />
+            Go to storyspar.ai →
+          </a>
+        </footer>
       </div>
-      
+
     </div>
   );
 }

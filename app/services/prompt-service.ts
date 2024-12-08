@@ -2,7 +2,7 @@ export const generateStory = async (prompt: string): Promise<String[]> => {
     try {
 
         //API URL as per stage local or production
-        const apiURL = window.location.hostname === 'localhoost'
+        const apiURL = window.location.hostname === 'localhost'
         ? 'http://localhost:4000/generate'
         : 'https://storyspark-api.vercel.app/generate';
 
