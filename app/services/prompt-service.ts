@@ -19,7 +19,7 @@ export const generateStory = async (prompt: string): Promise<string[]> => {
         }
 
         const data = await res.json();
-        return data.response || [];
+        return data.responses || [];
 
     } catch (error) {
         console.error(error);
