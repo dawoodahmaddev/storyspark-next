@@ -1,4 +1,4 @@
-export const generateStory = async (prompt: string): Promise<String[]> => {
+export const generateStory = async (prompt: string): Promise<string[]> => {
     try {
 
         //API URL as per stage local or production

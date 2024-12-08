@@ -8,16 +8,21 @@ export default function Home() {
 
   const [prompt, setPrompt] = useState<string>("");
   const [response, setResponse] = useState<string[]>([]);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setIsLoading(true);
+    setResponse([]);
+
     try {
       const data = await generateStory(prompt);
       console.log(data);
+      setResponse(data);
     } catch (error) {
       setResponse(["Error generating response"]);
     } finally {
-
+      setIsLoading(false);
     }
   }
 
