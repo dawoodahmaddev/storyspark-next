@@ -20,6 +20,7 @@ export default function Home() {
       console.log(data);
       setResponse(data);
     } catch (error) {
+      console.error(error)
       setResponse(["Error generating response"]);
     } finally {
       setIsLoading(false);
@@ -29,7 +30,7 @@ export default function Home() {
   return (
     <div className="font-sans min-h-screen flex items-center justify-center bg-gray-100 p-6">
       <header className="bg-blue-500 text-center fixed top-0 left-0 right-0 p-4 shadow-lg">
-        <h1 className="text-3xl font-semibold text-white">SPARK YOUR CHILD'S IMAGINATIONS!</h1>
+        <h1 className="text-3xl font-semibold text-white">SPARK YOUR CHILD’S IMAGINATIONS!</h1>
       </header>
       <div className="bg-white w-full max-w-lg p-6 rounded-md shadow-lg border">
         <h1 className="text-3xl font-semibold text-center text-gray-800 mb-6">Create Story</h1>
