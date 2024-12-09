@@ -1,7 +1,7 @@
 "use client"
 
 import Image from "next/image";
-import { use, useState } from "react";
+import { useState } from "react";
 import { generateStory, generateStoryImage } from "./services/prompt-service";
 import StoryResponse from "./components/story-response";
 
