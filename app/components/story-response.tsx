@@ -1,17 +1,18 @@
 import { useState, useEffect } from "react";
-
+import Image from "next/image";
 
 interface StoryResponseProps {
     response: string[];
+    imageURL: string;
     onBack: () => void;
 }
 
-export default function StoryResponse({ response, onBack }: StoryResponseProps) {
+export default function StoryResponse({ response, imageURL, onBack }: StoryResponseProps) {
 
     const [currentPage, SetCurrentPage] = useState<number>(0);
     const [animation, setAnimation] = useState<"flip-left" | "flip-right" | null>(null);
     const [loading, setLoading] = useState<boolean>(true);
-
+    const imgURL = imageURL;
     // Simulate a delay for loading response
     useEffect(() => {
         if (response && response.length > 0) {
@@ -44,12 +45,9 @@ export default function StoryResponse({ response, onBack }: StoryResponseProps) 
     }
 
     return (
-        <div className="font-sans min-h-screen flex flex-col items-center justify-center bg-gray-100 p-6">
+        <div className="font-sans min-h-screen flex flex-col items-center justify-center bg-gray-100 p-6  overflow-x-auto scroll-smooth">
 
-            <h2 className="text-3xl font-semibold text-center text-gray-800 mb-8">Generated Story</h2>
-
-            <div className="relative bg-white w-full max-w-lg p-6 rounded-md shadow-lg border">
-                
+            <div className="relative bg-white w-full md:w-8/12 p-6 rounded-md shadow-lg border">
                 {currentPage > 0 && (
                     <button
                         onClick={handlePrev}
@@ -58,22 +56,38 @@ export default function StoryResponse({ response, onBack }: StoryResponseProps) 
                         ←
                     </button>
                 )}
-                
+
                 <div
-                    className={`w-full p-6 bg-white border border-gray-300 rounded-lg shadow-xl transition-all duration-500 transform ${
-                        animation === "flip-left"
-                            ? "animate-flipLeft"
-                            : animation === "flip-right"
+                    className={`w-full p-6 bg-white border border-gray-300 rounded-lg shadow-xl transition-all duration-500 transform ${animation === "flip-left"
+                        ? "animate-flipLeft"
+                        : animation === "flip-right"
                             ? "animate-flipRight"
                             : ""
-                    }`}
+                        }`}
                     onAnimationEnd={() => setAnimation(null)}
                 >
-                
+
                     <h3 className="text-3xl font-bold text-gray-800 mb-4">Story {currentPage + 1}</h3>
-                
-                    <p className="text-gray-700 leading-relaxed p-2">{response[currentPage]}</p>
-                
+
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 items-center">
+                        {/* Text Column */}
+                        <div className="p-4">
+                            <p className="text-gray-700 leading-relaxed">{response[currentPage]}</p>
+                        </div>
+
+                        {/* Image Column */}
+                        <div className="flex justify-center">
+                            <Image
+                                src={imgURL}
+                                alt="Generated Image"
+                                width={200} // Set desired width
+                                height={200} // Set desired height
+                                priority={true} // Optional, for preloading
+                                className="rounded-lg"
+                            />
+                        </div>
+                    </div>
+
                 </div>
 
                 {currentPage < response.length - 1 && (

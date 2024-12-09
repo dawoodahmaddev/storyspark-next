@@ -1,14 +1,15 @@
 "use client"
 
 import Image from "next/image";
-import { useState } from "react";
-import { generateStory } from "./services/prompt-service";
+import { use, useState } from "react";
+import { generateStory, generateStoryImage } from "./services/prompt-service";
 import StoryResponse from "./components/story-response";
 
 export default function Home() {
 
   const [prompt, setPrompt] = useState<string>("");
   const [response, setResponse] = useState<string[]>([]);
+  const [imageURL, setImageURL] = useState<string>("");
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isLayoutVisible, setIsLayoutVisible] = useState<boolean>(false);
 
@@ -16,11 +17,14 @@ export default function Home() {
     e.preventDefault();
     setIsLoading(true);
     setResponse([]);
+    setImageURL("");
     setIsLayoutVisible(true);
 
     try {
       const data = await generateStory(prompt);
-      console.log(data);
+      const imageURL = await generateStoryImage(prompt);
+      console.log(data, imageURL);
+      setImageURL(imageURL);
       setResponse(data);
     } catch (error) {
       console.error(error)
@@ -79,7 +83,7 @@ export default function Home() {
       </div>
 
       ) : (
-        <StoryResponse response={response} onBack={handleBack} />
+        <StoryResponse response={response} imageURL={imageURL} onBack={handleBack} />
       )}
       
     </div>
